@@ -2,25 +2,29 @@ import { useState } from 'react';
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
+const StatisticLine = ({ text, value, isPercentage }) => {
+  return (
+    <p>{text} {value} {isPercentage && '%'}</p>
+  );
+};
+
 const Statistics = ({ good, neutral, bad }) => {
   // Derived state
   const all = good + neutral + bad;
   const average = all / 3;
   const positivePerc = (good / all) * 100;
 
+  if (all === 0) return <div><p>No feedback given</p></div>;
+
   return (
     <div> 
-      {all === 0 ? <p>No feedback given</p> : (
-        <>
-          <h1>statistics</h1>
-          <p>good {good}</p>
-          <p>neutral {neutral}</p>
-          <p>bad {bad}</p>
-          <p>all {all}</p>
-          <p>average {average}</p>
-          <p>positive {positivePerc}%</p>
-        </>
-      )}
+      <h1>statistics</h1>
+      <StatisticLine text='good' value={good}/>
+      <StatisticLine text='neutral' value={neutral}/> 
+      <StatisticLine text='bad' value={bad}/> 
+      <StatisticLine text='all' value={all}/> 
+      <StatisticLine text='average' value={average}/> 
+      <StatisticLine text='positive' value={positivePerc} isPercentage/>  
     </div>
   );
 };

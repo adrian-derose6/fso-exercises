@@ -1,30 +1,30 @@
-const Header = (props) => {
+const Header = ({ course }) => {
   return (
-    <h1>{props.course}</h1>
+    <h1>{course}</h1>
   );
 };
 
-const Part = (props) => {
+const Part = ({ name, number }) => {
   return (
     <p>
-      {props.name} {props.number}
+      {name} {number}
     </p>
   );
 };
 
-const Content = (props) => {
+const Content = ({ parts }) => {
   return (
     <div>
-      {props.parts.map((part, i) => (
+      {parts.map((part, i) => (
         <Part name={part.name} number={part.number} key={i}/>
       ))}
     </div>
   );
 };
 
-const Total = (props) => {
+const Total = ({ parts }) => {
   let total = 0;
-  props.parts.forEach(part => {
+  parts.forEach(part => {
     total += part.exercises;
   });
   return (
@@ -49,7 +49,7 @@ const App = () => {
         exercises: 14
       }
     ]
-  }
+  };
 
   return (
     <div>

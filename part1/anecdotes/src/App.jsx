@@ -15,14 +15,45 @@ const App = () => {
   ];
   const getRandomIndex = (arr) => {
     return Math.floor(Math.random() * arr.length)
-  }
+  };
+
   const [selected, setSelected] = useState(getRandomIndex(anecdotes));
-  console.log(selected)
-  
+  const [votes, setVotes] = useState(new Array(8).fill(0));
+
+  const findMaxVoteIndex = () => {
+    let maxValue = 0;
+    let maxIndex = 0;
+
+    votes.forEach((value, index) => {
+      if (value >= maxValue) {
+        maxValue = value;
+        maxIndex = index;
+      }
+    });
+
+    if (maxValue == 0) {
+      return -1;
+    }
+
+    return maxIndex;
+  }
+
+  const maxVoteIndex = findMaxVoteIndex();
+
+  const increaseVote = () => {
+    const newVotes = [...votes];
+    newVotes[selected] += 1;
+    setVotes(newVotes);
+  };
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <Button onClick={() => setSelected(getRandomIndex(anecdotes))} label='next anecdote'/>
+      <Button onClick={() => increaseVote()} label='vote' />
+      <h1>Anecdote with the most votes</h1>
+      <p>{maxVoteIndex >= 0 ? `${anecdotes[maxVoteIndex]} has ${votes[maxVoteIndex]} votes` : 'There are no votes'}</p>
     </div>
   );
 };

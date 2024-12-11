@@ -9,6 +9,15 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault()
     console.log('form submitted: ', newName);
+
+    const doesNameExist = persons.some((person) => {
+        return person.name === newName;
+    })
+
+    if (doesNameExist) {
+      return alert(`${newName} is already added to phonebook`);
+    }
+    
     const personObject = {
       name: newName
     }
